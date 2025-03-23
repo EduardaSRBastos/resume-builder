@@ -226,6 +226,7 @@ button {
   input.contact {
     display: none;
   }
+  
   .contact-print {
     display: block;
     pointer-events: auto;

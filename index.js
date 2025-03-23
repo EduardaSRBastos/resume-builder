@@ -29,9 +29,7 @@ function prepareForPrint() {
 }
 
 function cleanupAfterPrint() {
-  document
-    .querySelectorAll(".contact-print")
-    .forEach((link) => link.remove());
+  document.querySelectorAll(".contact-print").forEach((link) => link.remove());
   document
     .querySelectorAll(".contact")
     .forEach((input) => (input.style.display = "block"));
@@ -46,7 +44,12 @@ function hideEmptyFields() {
 
   document.querySelectorAll("ul li").forEach((li) => {
     const textarea = li.querySelector("textarea");
-    if (!textarea || !textarea.value.trim()) {
+    if (textarea && !textarea.value.trim()) {
+      li.style.display = "none";
+    }
+
+    const input = li.querySelector("input");
+    if (input && !input.value.trim()) {
       li.style.display = "none";
     }
   });
@@ -55,9 +58,13 @@ function hideEmptyFields() {
     const hasVisibleInput = container.querySelector(
       "input:not([style*='display: none']), textarea:not([style*='display: none'])"
     );
+
     if (!hasVisibleInput) {
-      container.querySelector("h1").style.display = "none";
-      container.querySelector("hr").style.display = "none";
+      const h1 = container.querySelector("h1");
+      const hr = container.querySelector("hr");
+
+      if (h1) h1.style.display = "none";
+      if (hr) hr.style.display = "none";
 
       container.querySelectorAll("p").forEach((p) => {
         if (p.textContent.trim() === ":" || p.textContent.trim() === "-") {
@@ -115,8 +122,55 @@ function removeDescriptionBlock(jobDescriptionList) {
   }
 }
 
-// Dynamic certification logic
+// Dynamic skill logic
+function handleSkillInput(event) {
+  const input = event.target;
+  const skillList = input.closest("ul");
 
+  if (input.value.trim() !== "") {
+    const lastInput = skillList.querySelector("li:last-child input");
+    if (lastInput === input) {
+      addSkillBlock(skillList);
+    }
+  } else {
+    removeSkillBlock(skillList);
+  }
+}
+
+function addSkillBlock(skillList) {
+  const newLi = document.createElement("li");
+  newLi.className = "skill-list";
+  const newInput = document.createElement("input");
+  newInput.type = "text";
+  newInput.className = "second-title";
+  newInput.placeholder = "Skill";
+  newInput.style.marginLeft = "-10px";
+
+  newInput.addEventListener("input", function () {
+    adjustWidth(this);
+    handleSkillInput(event);
+  });
+
+  newLi.appendChild(newInput);
+  skillList.appendChild(newLi);
+
+  adjustWidth(newInput);
+}
+
+function removeSkillBlock(skillList) {
+  const skillInputs = skillList.querySelectorAll(
+    '.second-title[placeholder="Skill"]'
+  );
+
+  if (
+    skillInputs.length > 1 &&
+    skillInputs[skillInputs.length - 1].value.trim() === ""
+  ) {
+    skillInputs[skillInputs.length - 1].parentNode.remove();
+  }
+}
+
+// Dynamic certification logic
 function getCertificationContainer() {
   return [...document.querySelectorAll(".category-container")].find(
     (container) =>
@@ -147,9 +201,14 @@ function addCertificationBlock(certificationContainer) {
   newInput.className = "second-title";
   newInput.placeholder = "Title";
 
+  newInput.addEventListener("input", function () {
+    adjustWidth(this);
+    handleCertificationInput(event);
+  });
+
   certificationContainer.appendChild(newInput);
 
-  newInput.addEventListener("input", handleCertificationInput);
+  adjustWidth(newInput);
 }
 
 function removeCertificationBlock(certificationContainer) {
@@ -352,9 +411,16 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("afterprint", restoreHiddenFields);
   window.addEventListener("afterprint", cleanupAfterPrint);
 
+  // Add new input below in description, skill and certification
   document.querySelectorAll(".text").forEach((textarea) => {
     textarea.addEventListener("input", handleDescriptionInput);
   });
+
+  document
+    .querySelectorAll('.second-title[placeholder="Skill"]')
+    .forEach((input) => {
+      input.addEventListener("input", handleSkillInput);
+    });
 
   const certificationContainer = getCertificationContainer();
   certificationContainer

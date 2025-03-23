@@ -11,7 +11,6 @@
     <header>CV Template</header>
 
     <div class="main-container">
-
       <div class="page">
         <div class="category-container">
           <input type="text" class="name" placeholder="Name" />
@@ -21,86 +20,122 @@
             <input type="url" class="contact" placeholder="Portfolio" />
           </div>
         </div>
-  
+
         <div class="category-container">
           <div class="flex-container">
             <h1>Professional Experience</h1>
             <button class="add">+</button>
           </div>
-          <hr>
-  
+          <hr />
+
           <div class="grid-container">
             <input type="text" class="second-title" placeholder="Job Title" />
 
             <div class="date-container">
-              <input type="text" class="work-start-date second-title" placeholder="Start Date" />
+              <input
+                type="text"
+                class="work-start-date second-title"
+                placeholder="Start Date"
+              />
               <p class="second-title">-</p>
-              <input type="text" class="work-end-date second-title" placeholder="End Date/Present" />
+              <input
+                type="text"
+                class="work-end-date second-title"
+                placeholder="End Date/Present"
+              />
             </div>
 
             <input type="text" class="third-title" placeholder="Company Name" />
-            <input type="text" class="third-title location" placeholder="Location" />
+            <input
+              type="text"
+              class="third-title location"
+              placeholder="Location"
+            />
           </div>
-  
+
           <ul>
-            <li><textarea class="text" placeholder="Description"></textarea></li>
-          </ul> 
+            <li>
+              <textarea class="text" placeholder="Description"></textarea>
+            </li>
+          </ul>
         </div>
-  
+
         <div class="category-container">
           <div class="flex-container">
             <h1>Education</h1>
             <button class="add">+</button>
           </div>
-          <hr>
-  
+          <hr />
+
           <div class="grid-container">
             <input type="text" class="second-title" placeholder="Degree" />
-  
+
             <div class="date-container">
-              <input type="text" class="education-start-date second-title" placeholder="Start Date" />
+              <input
+                type="text"
+                class="education-start-date second-title"
+                placeholder="Start Date"
+              />
               <p class="second-title">-</p>
-              <input type="text" class="education-end-date second-title" placeholder="End Date/Present" />
+              <input
+                type="text"
+                class="education-end-date second-title"
+                placeholder="End Date/Present"
+              />
             </div>
-            
+
             <input type="text" class="third-title" placeholder="School Name" />
-            <input type="text" class="third-title location" placeholder="Location" />
+            <input
+              type="text"
+              class="third-title location"
+              placeholder="Location"
+            />
           </div>
-  
         </div>
-  
+
         <div class="category-container">
           <div class="flex-container">
             <h1>Technical Skills</h1>
-            <button class="add">+</button>
           </div>
-          <hr>
-  
+          <hr />
+
           <div class="grid-container">
-            <ul>
-              <li class="skill-list"><input type="text" class="second-title" placeholder="Skill" style="margin-left: -10px"/></li>
-            </ul> 
+            <ul style="margin: 0;">
+              <li class="skill-list">
+                <input
+                  type="text"
+                  class="second-title"
+                  placeholder="Skill"
+                  style="margin-left: -10px"
+                />
+              </li>
+            </ul>
           </div>
         </div>
-  
+
         <div class="category-container">
           <div class="flex-container">
             <h1>Languages</h1>
             <button class="add">+</button>
           </div>
-          <hr>
-  
+          <hr />
+
           <div class="flex-container">
             <input type="text" class="second-title" placeholder="Language" />
-            <p class="second-title" style="margin: auto 10px auto 5px;">:</p>
-            <input type="text" class="third-title" placeholder="CEFR Level" style="margin: 0;"/>
+            <p class="second-title" style="margin: auto 10px auto 5px">:</p>
+            <input
+              type="text"
+              class="third-title"
+              placeholder="CEFR Level"
+              style="margin: 0"
+            />
           </div>
         </div>
-  
+
         <div class="category-container">
           <h1>Certifications, Licences & Publications</h1>
-          <hr>
-  
+          <hr />
+
           <input type="text" class="second-title" placeholder="Title" />
         </div>
       </div>
@@ -109,8 +144,19 @@
         <button onclick="window.print()">Print PDF</button>
         <div class="file-buttons-container">
           <button onclick="saveToFile()">Save as File</button>
-          <button class="load-file" onclick="document.getElementById('load-file').click()">Load CV File</button>
-          <input type="file" id="load-file" accept=".json" onchange="loadFromFile(event)" style="display: none;"/>
+          <button
+            class="load-file"
+            onclick="document.getElementById('load-file').click()"
+          >
+            Load CV File
+          </button>
+          <input
+            type="file"
+            id="load-file"
+            accept=".json"
+            onchange="loadFromFile(event)"
+            style="display: none"
+          />
         </div>
       </div>
     </div>
