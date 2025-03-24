@@ -220,9 +220,9 @@ li::before {
   flex-direction: column;
   gap: 20px;
   position: fixed;
-  top: 30px;
-  right: 30px;
-  align-items: end;
+  top: 152px;
+  right: 345px;
+  align-items: start;
   z-index: 1000;
 }
 
@@ -245,6 +245,13 @@ li::before {
 .buttons-container button:hover {
   zoom: 1.1;
   background: linear-gradient(0deg, #d9eaff, #85b0e6);
+}
+
+footer {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
 }
 
 /* Print */
