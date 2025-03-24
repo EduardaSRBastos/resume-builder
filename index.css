@@ -14,9 +14,15 @@ body {
 header {
   text-align: center;
   font-weight: bold;
-  font-size: 40px;
+  font-size: 44px;
   margin-bottom: 50px;
   color: #216ce1;
+  font-family: Tahoma;
+  text-shadow: 
+    -2px -2px 0px white,  
+    2px -2px 0px white,  
+    -2px 2px 0px white,  
+    2px 2px 0px white;  
 }
 
 .main-container {
@@ -41,7 +47,11 @@ input {
   height: 24px;
   padding: 3px 5px;
   border-radius: 5px;
-  border: 1px solid gray;
+  border: 1px solid #80808040;
+}
+
+input:focus {
+  outline: 2px solid #92baeb;
 }
 
 .name {
@@ -184,7 +194,11 @@ li::before {
   word-wrap: break-word;
   white-space: pre-wrap;
   border-radius: 5px;
-  border: 1px solid gray;
+  border: 1px solid #80808040;
+}
+
+.text:focus {
+  outline: 2px solid #92baeb;
 }
 
 .skill-list::before {
@@ -205,13 +219,15 @@ li::before {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  position: relative;
-  left: 600px;
-  align-items: center;
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  align-items: end;
+  z-index: 1000;
 }
 
 .buttons-container button {
-  font-family: var(--font);
+  font-family: Tahoma;
   height: fit-content;
   width: fit-content;
   position: relative;
@@ -221,7 +237,7 @@ li::before {
   font-weight: bold;
   border: none;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 10px;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(33, 108, 225, 0.2);
 }
@@ -229,15 +245,6 @@ li::before {
 .buttons-container button:hover {
   zoom: 1.1;
   background: linear-gradient(0deg, #d9eaff, #85b0e6);
-}
-
-.file-buttons-container {
-  display: flex;
-}
-
-.load-file {
-  left: 20px;
-  position: relative;
 }
 
 /* Print */
