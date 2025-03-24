@@ -7,7 +7,7 @@ function adjustWidth(input) {
   const textWidth = context.measureText(
     input.value || input.placeholder || " "
   ).width;
-  input.style.width = `${textWidth + 10}px`;
+  input.style.width = `${textWidth + 5}px`;
 }
 
 // Add links in print and hide empty fields
@@ -71,6 +71,25 @@ function hideEmptyFields() {
           p.style.display = "none";
         }
       });
+    }
+  });
+
+  document.querySelectorAll(".flex-container").forEach((container) => {
+    const languageInput = container.querySelector(
+      '.second-title[placeholder="Language"]'
+    );
+    const cefrInput = container.querySelector(
+      '.third-title[placeholder="CEFR Level"]'
+    );
+    const separator = container.querySelector("p");
+
+    if (separator && separator.textContent.trim() === ":") {
+      const languageEmpty = !languageInput || !languageInput.value.trim();
+      const cefrEmpty = !cefrInput || !cefrInput.value.trim();
+
+      if (languageEmpty || cefrEmpty) {
+        separator.style.display = "none";
+      }
     }
   });
 }
@@ -170,6 +189,77 @@ function removeSkillBlock(skillList) {
   }
 }
 
+function getLanguageContainer() {
+  return [...document.querySelectorAll(".category-container")].find(
+    (container) =>
+      container.querySelector("h1")?.textContent.trim() === "Languages"
+  );
+}
+
+// Dynamic language logic
+function handleLanguageInput(event) {
+  const input = event.target;
+  const languageContainer = getLanguageContainer();
+
+  if (input.value.trim() !== "") {
+    const flexContainer = languageContainer.querySelector(
+      ".flex-container:last-of-type"
+    );
+    const languageInput = flexContainer.querySelector(
+      '.second-title[placeholder="Language"]'
+    );
+    const cefrInput = flexContainer.querySelector(
+      '.third-title[placeholder="CEFR Level"]'
+    );
+
+    if (languageInput.value.trim() !== "" && cefrInput.value.trim() !== "") {
+      addLanguageBlock(languageContainer);
+    }
+  } else {
+    removeLanguageBlock(languageContainer);
+  }
+}
+
+function addLanguageBlock(languageContainer) {
+  const newFlexContainer = document.createElement("div");
+  newFlexContainer.className = "flex-container";
+  newFlexContainer.innerHTML = `
+    <input type="text" class="second-title" placeholder="Language" />
+    <p class="second-title" style="margin: auto 10px auto 5px">:</p>
+    <input type="text" class="third-title" placeholder="CEFR Level" style="margin: 0" />
+  `;
+
+  newFlexContainer.querySelectorAll("input").forEach((input) => {
+    input.addEventListener("input", function (event) {
+      adjustWidth(this);
+      handleLanguageInput(event);
+    });
+  });
+
+  languageContainer.appendChild(newFlexContainer);
+
+  newFlexContainer.querySelectorAll("input").forEach(adjustWidth);
+}
+
+function removeLanguageBlock(languageContainer) {
+  const languageInputs = languageContainer.querySelectorAll(
+    '.second-title[placeholder="Language"]'
+  );
+  const cefrInputs = languageContainer.querySelectorAll(
+    '.third-title[placeholder="CEFR Level"]'
+  );
+
+  if (
+    languageInputs.length > 1 &&
+    languageInputs[languageInputs.length - 1].value.trim() === "" &&
+    cefrInputs[cefrInputs.length - 1].value.trim() === ""
+  ) {
+    languageInputs[languageInputs.length - 1]
+      .closest(".flex-container")
+      .remove();
+  }
+}
+
 // Dynamic certification logic
 function getCertificationContainer() {
   return [...document.querySelectorAll(".category-container")].find(
@@ -224,6 +314,7 @@ function removeCertificationBlock(certificationContainer) {
   }
 }
 
+// save and load to file logic
 function saveToFile() {
   const certificationContainer = getCertificationContainer();
 
@@ -411,7 +502,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("afterprint", restoreHiddenFields);
   window.addEventListener("afterprint", cleanupAfterPrint);
 
-  // Add new input below in description, skill and certification
+  // Add new input below in description, skill, language and certification
   document.querySelectorAll(".text").forEach((textarea) => {
     textarea.addEventListener("input", handleDescriptionInput);
   });
@@ -420,6 +511,14 @@ document.addEventListener("DOMContentLoaded", function () {
     .querySelectorAll('.second-title[placeholder="Skill"]')
     .forEach((input) => {
       input.addEventListener("input", handleSkillInput);
+    });
+
+  document
+    .querySelectorAll(
+      ".second-title[placeholder='Language'], .third-title[placeholder='CEFR Level']"
+    )
+    .forEach((input) => {
+      input.addEventListener("input", handleLanguageInput);
     });
 
   const certificationContainer = getCertificationContainer();

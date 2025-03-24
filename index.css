@@ -226,9 +226,13 @@ button {
   input.contact {
     display: none;
   }
-  
+
   .contact-print {
     display: block;
     pointer-events: auto;
+  }
+  
+  #language-divider {
+    margin: auto -2px auto -8px !important;
   }
 }
