@@ -1,11 +1,11 @@
 <div align="center">
   
-# CV Template
-[![GitHub License](https://img.shields.io/github/license/EduardaSRBastos/cv-template?style=plastic&color=darkred)](https://github.com/EduardaSRBastos/cv-template?tab=MIT-1-ov-file)
-[![GitHub branch check runs](https://img.shields.io/github/check-runs/EduardaSRBastos/cv-template/main?style=plastic)](https://github.com/EduardaSRBastos/cv-template/actions)
-[![GitHub repo size](https://img.shields.io/github/repo-size/EduardaSRBastos/cv-template?style=plastic)](https://github.com/EduardaSRBastos/cv-template)
+# Resume Builder
+[![GitHub License](https://img.shields.io/github/license/EduardaSRBastos/resume-builder?style=plastic&color=darkred)](https://github.com/EduardaSRBastos/resume-builder?tab=MIT-1-ov-file)
+[![GitHub branch check runs](https://img.shields.io/github/check-runs/EduardaSRBastos/resume-builder/main?style=plastic)](https://github.com/EduardaSRBastos/resume-builder/actions)
+[![GitHub repo size](https://img.shields.io/github/repo-size/EduardaSRBastos/resume-builder?style=plastic)](https://github.com/EduardaSRBastos/resume-builder)
 
-<p><i>A customizable CV (Curriculum Vitae) template built using HTML, CSS, and JavaScript.</i></p>
+<p><i>A customizable resume builder template built using HTML, CSS, and JavaScript.</i></p>
 
 <kbd> image </kbd>
 
@@ -33,7 +33,7 @@
 
 ## How to Use
 
-1. **Visit the live version:** [CV Template](https://eduardasrbastos.github.io/cv-template).
+1. **Visit the live version:** [Resume Builder](https://eduardasrbastos.github.io/resume-builder).
 2. **Fill in your details:** Enter your information into the provided fields.  
 3. **Save your progress:** Export your data as a JSON file for future editing.  
 4. **Generate a PDF:** Print your CV directly as a PDF document.  
