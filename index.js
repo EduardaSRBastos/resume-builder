@@ -60,12 +60,6 @@ function hideEmptyFields() {
 
       if (h1) h1.style.display = "none";
       if (hr) hr.style.display = "none";
-
-      container.querySelectorAll("p").forEach((p) => {
-        if (p.textContent.trim() === ":" || p.textContent.trim() === "-") {
-          p.style.display = "none";
-        }
-      });
     }
   });
 
@@ -85,6 +79,18 @@ function hideEmptyFields() {
       if (languageEmpty || cefrEmpty) {
         separator.style.display = "none";
       }
+    }
+  });
+
+  document.querySelectorAll(".date-container").forEach((container) => {
+    const startDateInput = container.querySelector(".second-title:first-child");
+    const endDateInput = container.querySelector(".second-title:last-child");
+    const separator = container.querySelector("p");
+
+    if (!startDateInput.value.trim() || !endDateInput.value.trim()) {
+      separator.style.display = "none";
+    } else {
+      separator.style.display = "block";
     }
   });
 }
@@ -524,10 +530,12 @@ document.addEventListener("DOMContentLoaded", function () {
       input.addEventListener("input", handleCertificationInput);
     });
 
-  // Add new professional experience logic
-  const addButton = document.querySelector(".add");
+  // Add new professional experience and education logic
+  const addProfessionalExperienceButton = document.querySelector(
+    ".professional-experience-add"
+  );
 
-  addButton.addEventListener("click", () => {
+  addProfessionalExperienceButton.addEventListener("click", () => {
     const categoryContainer = document.querySelector(".category-container");
 
     const professionalExperienceContainer = Array.from(
@@ -553,13 +561,15 @@ document.addEventListener("DOMContentLoaded", function () {
         newAddButton.remove();
       }
 
-      const removeButton = document.createElement('button');
-      removeButton.textContent = '-';
-      removeButton.classList.add('remove');
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "-";
+      removeButton.classList.add("remove");
 
-      newCategoryContainer.querySelector('.flex-container').appendChild(removeButton);
+      newCategoryContainer
+        .querySelector(".flex-container")
+        .appendChild(removeButton);
 
-      removeButton.addEventListener('click', () => {
+      removeButton.addEventListener("click", () => {
         newCategoryContainer.remove();
       });
 
@@ -574,6 +584,59 @@ document.addEventListener("DOMContentLoaded", function () {
       newTextareas.forEach((textarea) => {
         textarea.addEventListener("input", handleDescriptionInput);
       });
+
+      newCategoryContainer.querySelectorAll("input").forEach((input) => {
+        adjustWidth(input);
+        input.addEventListener("input", function () {
+          adjustWidth(this);
+        });
+      });
+    }
+  });
+
+  const addEducationButton = document.querySelector(".education-add");
+
+  addEducationButton.addEventListener("click", () => {
+    const categoryContainer = document.querySelector(".category-container");
+
+    const educationContainer = Array.from(
+      categoryContainer.parentElement.children
+    ).find(
+      (child) =>
+        child.querySelector("h1") &&
+        child.querySelector("h1").textContent === "Education"
+    );
+
+    if (educationContainer) {
+      const newCategoryContainer = educationContainer.cloneNode(true);
+
+      newCategoryContainer.querySelectorAll("input").forEach((input) => {
+        input.value = "";
+      });
+
+      const newAddButton = newCategoryContainer.querySelector(".add");
+      if (newAddButton) {
+        newAddButton.remove();
+      }
+
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "-";
+      removeButton.classList.add("remove");
+
+      newCategoryContainer
+        .querySelector(".flex-container")
+        .appendChild(removeButton);
+
+      removeButton.addEventListener("click", () => {
+        newCategoryContainer.remove();
+      });
+
+      const parentContainer = educationContainer.parentElement;
+
+      parentContainer.insertBefore(
+        newCategoryContainer,
+        educationContainer.nextElementSibling
+      );
 
       newCategoryContainer.querySelectorAll("input").forEach((input) => {
         adjustWidth(input);
