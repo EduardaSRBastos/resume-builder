@@ -171,6 +171,10 @@ li::before {
   font-size: 20px;
 }
 
+#certification-input {
+  display: grid;
+}
+
 /* Buttons */
 .buttons-container {
   display: flex;

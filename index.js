@@ -225,7 +225,7 @@ function addLanguageBlock(languageContainer) {
   newFlexContainer.className = "flex-container";
   newFlexContainer.innerHTML = `
     <input type="text" class="second-title" placeholder="Language" />
-    <p class="second-title" style="margin: auto 10px auto 5px">:</p>
+    <p class="second-title" id="language-divider" style="margin: auto 5px auto 3px">:</p>
     <input type="text" class="third-title" placeholder="CEFR Level" style="margin: 0" />
   `;
 
@@ -289,6 +289,7 @@ function addCertificationBlock(certificationContainer) {
   const newInput = document.createElement("input");
   newInput.type = "text";
   newInput.className = "second-title";
+  newInput.id = "certification-input";
   newInput.placeholder = "Title";
 
   newInput.addEventListener("input", function () {
