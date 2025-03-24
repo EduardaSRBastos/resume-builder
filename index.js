@@ -43,13 +43,8 @@ function hideEmptyFields() {
   });
 
   document.querySelectorAll("ul li").forEach((li) => {
-    const textarea = li.querySelector("textarea");
-    if (textarea && !textarea.value.trim()) {
-      li.style.display = "none";
-    }
-
-    const input = li.querySelector("input");
-    if (input && !input.value.trim()) {
+    const inputOrTextarea = li.querySelector("input, textarea");
+    if (inputOrTextarea && !inputOrTextarea.value.trim()) {
       li.style.display = "none";
     }
   });
@@ -528,4 +523,64 @@ document.addEventListener("DOMContentLoaded", function () {
     .forEach((input) => {
       input.addEventListener("input", handleCertificationInput);
     });
+
+  // Add new professional experience logic
+  const addButton = document.querySelector(".add");
+
+  addButton.addEventListener("click", () => {
+    const categoryContainer = document.querySelector(".category-container");
+
+    const professionalExperienceContainer = Array.from(
+      categoryContainer.parentElement.children
+    ).find(
+      (child) =>
+        child.querySelector("h1") &&
+        child.querySelector("h1").textContent === "Professional Experience"
+    );
+
+    if (professionalExperienceContainer) {
+      const newCategoryContainer =
+        professionalExperienceContainer.cloneNode(true);
+
+      newCategoryContainer
+        .querySelectorAll("input, textarea")
+        .forEach((input) => {
+          input.value = "";
+        });
+
+      const newAddButton = newCategoryContainer.querySelector(".add");
+      if (newAddButton) {
+        newAddButton.remove();
+      }
+
+      const removeButton = document.createElement('button');
+      removeButton.textContent = '-';
+      removeButton.classList.add('remove');
+
+      newCategoryContainer.querySelector('.flex-container').appendChild(removeButton);
+
+      removeButton.addEventListener('click', () => {
+        newCategoryContainer.remove();
+      });
+
+      const parentContainer = professionalExperienceContainer.parentElement;
+
+      parentContainer.insertBefore(
+        newCategoryContainer,
+        professionalExperienceContainer.nextElementSibling
+      );
+
+      const newTextareas = newCategoryContainer.querySelectorAll(".text");
+      newTextareas.forEach((textarea) => {
+        textarea.addEventListener("input", handleDescriptionInput);
+      });
+
+      newCategoryContainer.querySelectorAll("input").forEach((input) => {
+        adjustWidth(input);
+        input.addEventListener("input", function () {
+          adjustWidth(this);
+        });
+      });
+    }
+  });
 });
