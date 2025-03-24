@@ -33,7 +33,7 @@
 
 ## How to Use
 
-1. **Visit the live version:** [CV Template](https://eduardasrbastos.github.io/cv-template)  
+1. **Visit the live version:** [CV Template](https://eduardasrbastos.github.io/cv-template).
 2. **Fill in your details:** Enter your information into the provided fields.  
 3. **Save your progress:** Export your data as a JSON file for future editing.  
 4. **Generate a PDF:** Print your CV directly as a PDF document.  
