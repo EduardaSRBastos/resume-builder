@@ -4,7 +4,7 @@
 
 html {
   font-family: var(--font);
-  background-color: #f2f8ff;
+  background: #d9eaff;
 }
 
 body {
@@ -16,12 +16,13 @@ header {
   font-weight: bold;
   font-size: 40px;
   margin-bottom: 50px;
-  color: #2a20ac;
+  color: #216ce1;
 }
 
 .main-container {
   display: flex;
   justify-content: center;
+  height: 140vh;
 }
 
 /* Page content */
@@ -79,12 +80,13 @@ h1 {
   cursor: pointer;
   color: #2a20ac;
   padding: 0;
-  line-height: 25px;
+  line-height: 0;
 }
 
 .add:hover {
   color: #1378d6;
   border-color:#1378d6;
+  background: #1378d63b;
   width: 26px;
   height: 26px;
   margin-top: 24px;
@@ -107,6 +109,7 @@ h1 {
 .remove:hover {
   color: #db476c;
   border-color:#db476c;
+  background:#db476c3b;
   width: 26px;
   height: 26px;
   margin-top: 24px;
@@ -204,13 +207,28 @@ li::before {
   gap: 20px;
   position: relative;
   left: 600px;
+  align-items: center;
 }
 
-button {
+.buttons-container button {
   font-family: var(--font);
   height: fit-content;
   width: fit-content;
   position: relative;
+  background: linear-gradient(180deg, #d9eaff, #85b0e6);
+  color: #216ce1;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(33, 108, 225, 0.2);
+}
+
+.buttons-container button:hover {
+  zoom: 1.1;
+  background: linear-gradient(0deg, #d9eaff, #85b0e6);
 }
 
 .file-buttons-container {
