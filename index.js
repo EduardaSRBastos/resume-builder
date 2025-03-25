@@ -320,6 +320,23 @@ function removeCertificationBlock(certificationContainer) {
 function saveToFile() {
   const certificationContainer = getCertificationContainer();
 
+  const languages = [];
+
+  const languageInputs = document.querySelectorAll(
+    '.second-title[placeholder="Language"]'
+  );
+  const cefrInputs = document.querySelectorAll(
+    '.third-title[placeholder="CEFR Level"]'
+  );
+
+  languageInputs.forEach((languageInput, index) => {
+    const cefrInput = cefrInputs[index];
+    languages.push({
+      name: languageInput.value,
+      level: cefrInput.value,
+    });
+  });
+
   let cvData = {
     name: document.querySelector(".name").value,
     email: document.querySelector('.contact[type="email"]').value,
@@ -327,43 +344,45 @@ function saveToFile() {
     portfolio: document.querySelector('.contact[placeholder="Portfolio"]')
       .value,
 
-    workExperience: {
-      jobTitle: document.querySelector('.second-title[placeholder="Job Title"]')
-        .value,
-      companyName: document.querySelector(
+    workExperience: Array.from(
+      document.querySelectorAll(".work-experience")
+    ).map((experience) => ({
+      jobTitle: experience.querySelector(
+        '.second-title[placeholder="Job Title"]'
+      ).value,
+      companyName: experience.querySelector(
         '.third-title[placeholder="Company Name"]'
       ).value,
-      startDate: document.querySelector(".work-start-date").value,
-      endDate: document.querySelector(".work-end-date").value,
-      location: document.querySelector('.third-title[placeholder="Location"]')
+      startDate: experience.querySelector(".work-start-date").value,
+      endDate: experience.querySelector(".work-end-date").value,
+      location: experience.querySelector('.third-title[placeholder="Location"]')
         .value,
       description: [
-        ...document.querySelectorAll('.text[placeholder="Description"]'),
+        ...experience.querySelectorAll('.text[placeholder="Description"]'),
       ].map((textarea) => textarea.value),
-    },
+    })),
 
-    education: {
-      degree: document.querySelector('.second-title[placeholder="Degree"]')
-        .value,
-      schoolName: document.querySelector(
-        '.third-title[placeholder="School Name"]'
-      ).value,
-      startDate: document.querySelector(".education-start-date").value,
-      endDate: document.querySelector(".education-end-date").value,
-      location: document.querySelector('.third-title[placeholder="Location"]')
-        .value,
-    },
+    education: Array.from(document.querySelectorAll(".education")).map(
+      (educationItem) => ({
+        degree: educationItem.querySelector(
+          '.second-title[placeholder="Degree"]'
+        ).value,
+        schoolName: educationItem.querySelector(
+          '.third-title[placeholder="School Name"]'
+        ).value,
+        startDate: educationItem.querySelector(".education-start-date").value,
+        endDate: educationItem.querySelector(".education-end-date").value,
+        location: educationItem.querySelector(
+          '.third-title[placeholder="Location"]'
+        ).value,
+      })
+    ),
 
     techSkills: [
       ...document.querySelectorAll('.second-title[placeholder="Skill"]'),
     ].map((input) => input.value),
 
-    languages: {
-      name: document.querySelector('.second-title[placeholder="Language"]')
-        .value,
-      level: document.querySelector('.third-title[placeholder="CEFR Level"]')
-        .value,
-    },
+    languages: languages,
 
     certifications: [
       ...certificationContainer.querySelectorAll(
@@ -376,7 +395,8 @@ function saveToFile() {
   let blob = new Blob([jsonData], { type: "application/json" });
   let a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "cv_data.json";
+  let fileName = cvData.name ? `${cvData.name} Resume.json` : "My Resume.json";
+  a.download = fileName;
   a.click();
 }
 
@@ -388,7 +408,6 @@ function loadFromFile(event) {
   reader.onload = function (event) {
     let jsonData = JSON.parse(event.target.result);
     const certificationContainer = getCertificationContainer();
-
     document.querySelector(".name").value = jsonData.name || "";
     document.querySelector('.contact[type="email"]').value =
       jsonData.email || "";
@@ -398,70 +417,124 @@ function loadFromFile(event) {
       jsonData.portfolio || "";
 
     if (jsonData.workExperience) {
-      document.querySelector('.second-title[placeholder="Job Title"]').value =
-        jsonData.workExperience.jobTitle || "";
-      document.querySelector('.third-title[placeholder="Company Name"]').value =
-        jsonData.workExperience.companyName || "";
-      document.querySelector(".work-start-date").value =
-        jsonData.workExperience.startDate || "";
-      document.querySelector(".work-end-date").value =
-        jsonData.workExperience.endDate || "";
-      document.querySelector('.third-title[placeholder="Location"]').value =
-        jsonData.workExperience.location || "";
+      let experienceBlocks = document.querySelectorAll(".work-experience");
 
-      const descriptions = jsonData.workExperience.description || [];
-      const descriptionList = document.querySelector("ul");
+      while (experienceBlocks.length < jsonData.workExperience.length) {
+        document.querySelector(".professional-experience-add").click();
+        experienceBlocks = document.querySelectorAll(".work-experience");
+      }
 
-      descriptionList.innerHTML = "";
+      jsonData.workExperience.forEach((experience, index) => {
+        let experienceBlock = experienceBlocks[index];
 
-      descriptions.forEach((description) => {
-        const newLi = document.createElement("li");
-        newLi.innerHTML = `<textarea class="text" placeholder="Description">${description}</textarea>`;
-        descriptionList.appendChild(newLi);
-      });
+        experienceBlock.querySelector(
+          '.second-title[placeholder="Job Title"]'
+        ).value = experience.jobTitle || "";
+        experienceBlock.querySelector(
+          '.third-title[placeholder="Company Name"]'
+        ).value = experience.companyName || "";
+        experienceBlock.querySelector(".work-start-date").value =
+          experience.startDate || "";
+        experienceBlock.querySelector(".work-end-date").value =
+          experience.endDate || "";
+        experienceBlock.querySelector(
+          '.third-title[placeholder="Location"]'
+        ).value = experience.location || "";
 
-      descriptionList.querySelectorAll(".text").forEach((textarea) => {
-        textarea.addEventListener("input", handleDescriptionInput);
-        textarea.style.height = textarea.scrollHeight - 10 + "px";
+        let descriptionList = experienceBlock.querySelector("ul");
+        descriptionList.innerHTML = "";
+
+        experience.description.forEach((desc) => {
+          let newLi = document.createElement("li");
+          newLi.innerHTML = `<textarea class="text" placeholder="Description">${desc}</textarea>`;
+          descriptionList.appendChild(newLi);
+        });
+
+        descriptionList.querySelectorAll(".text").forEach((textarea) => {
+          textarea.addEventListener("input", handleDescriptionInput);
+          textarea.style.height = textarea.scrollHeight - 10 + "px";
+        });
       });
     }
 
     if (jsonData.education) {
-      document.querySelector('.second-title[placeholder="Degree"]').value =
-        jsonData.education.degree || "";
-      document.querySelector('.third-title[placeholder="School Name"]').value =
-        jsonData.education.schoolName || "";
-      document.querySelector(".education-start-date").value =
-        jsonData.education.startDate || "";
-      document.querySelector(".education-end-date").value =
-        jsonData.education.endDate || "";
-      document.querySelector('.third-title[placeholder="Location"]').value =
-        jsonData.education.location || "";
+      let educationBlocks = document.querySelectorAll(".education");
+
+      while (educationBlocks.length < jsonData.education.length) {
+        document.querySelector(".education-add").click();
+        educationBlocks = document.querySelectorAll(".education");
+      }
+
+      jsonData.education.forEach((edu, index) => {
+        let educationBlock = educationBlocks[index];
+
+        educationBlock.querySelector(
+          '.second-title[placeholder="Degree"]'
+        ).value = edu.degree || "";
+        educationBlock.querySelector(
+          '.third-title[placeholder="School Name"]'
+        ).value = edu.schoolName || "";
+        educationBlock.querySelector(".education-start-date").value =
+          edu.startDate || "";
+        educationBlock.querySelector(".education-end-date").value =
+          edu.endDate || "";
+        educationBlock.querySelector(
+          '.third-title[placeholder="Location"]'
+        ).value = edu.location || "";
+      });
     }
 
     let skillInputs = document.querySelectorAll(
       '.second-title[placeholder="Skill"]'
     );
 
-    skillInputs.forEach((input, index) => {
-      input.value = jsonData.techSkills[index] || "";
-      adjustWidth(input);
+    jsonData.techSkills.forEach((skill, index) => {
+      if (index >= skillInputs.length) {
+        addSkillBlock(skillInputs[0].closest("ul"));
+        skillInputs = document.querySelectorAll(
+          '.second-title[placeholder="Skill"]'
+        );
+      }
+      skillInputs[index].value = skill;
+      adjustWidth(skillInputs[index]);
     });
 
-    document.querySelector('.second-title[placeholder="Language"]').value =
-      jsonData.languages.name || "";
-    document.querySelector('.third-title[placeholder="CEFR Level"]').value =
-      jsonData.languages.level || "";
+    if (jsonData.languages) {
+      let languageInputs = document.querySelectorAll(
+        '.second-title[placeholder="Language"]'
+      );
+      let cefrInputs = document.querySelectorAll(
+        '.third-title[placeholder="CEFR Level"]'
+      );
+
+      jsonData.languages.forEach((lang, index) => {
+        if (index >= languageInputs.length) {
+          addLanguageBlock(getLanguageContainer());
+          languageInputs = document.querySelectorAll(
+            '.second-title[placeholder="Language"]'
+          );
+          cefrInputs = document.querySelectorAll(
+            '.third-title[placeholder="CEFR Level"]'
+          );
+        }
+        languageInputs[index].value = lang.name || "";
+        cefrInputs[index].value = lang.level || "";
+        adjustWidth(languageInputs[index]);
+        adjustWidth(cefrInputs[index]);
+      });
+    }
+
+    certificationContainer.innerHTML = `
+    <h1>Certifications, Licences & Publications</h1>
+    <hr>
+  `;
 
     const certifications = jsonData.certifications || [];
-    certificationContainer.innerHTML = `
-      <h1>Certifications, Licences & Publications</h1>
-      <hr>
-    `;
 
     certifications.forEach((certification) => {
       const newInput = document.createElement("input");
       newInput.type = "text";
+      newInput.id = "certification-input";
       newInput.className = "second-title";
       newInput.placeholder = "Title";
       newInput.value = certification;
@@ -469,8 +542,6 @@ function loadFromFile(event) {
       newInput.addEventListener("input", handleCertificationInput);
       adjustWidth(newInput);
     });
-
-    addCertificationBlock(certificationContainer);
 
     document.querySelectorAll("input").forEach((input) => {
       adjustWidth(input);
