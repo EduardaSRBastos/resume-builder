@@ -316,7 +316,7 @@ function removeCertificationBlock(certificationContainer) {
   }
 }
 
-// save and load to file logic
+// Save to file logic
 function saveToFile() {
   const certificationContainer = getCertificationContainer();
 
@@ -345,7 +345,9 @@ function saveToFile() {
       .value,
 
     workExperience: Array.from(
-      document.querySelectorAll(".work-experience")
+      document.querySelectorAll(
+        ".category-container.work-experience .grid-container"
+      )
     ).map((experience) => ({
       jobTitle: experience.querySelector(
         '.second-title[placeholder="Job Title"]'
@@ -358,25 +360,26 @@ function saveToFile() {
       location: experience.querySelector('.third-title[placeholder="Location"]')
         .value,
       description: [
-        ...experience.querySelectorAll('.text[placeholder="Description"]'),
+        ...experience.nextElementSibling.querySelectorAll(
+          '.text[placeholder="Description"]'
+        ),
       ].map((textarea) => textarea.value),
     })),
 
-    education: Array.from(document.querySelectorAll(".education")).map(
-      (educationItem) => ({
-        degree: educationItem.querySelector(
-          '.second-title[placeholder="Degree"]'
-        ).value,
-        schoolName: educationItem.querySelector(
-          '.third-title[placeholder="School Name"]'
-        ).value,
-        startDate: educationItem.querySelector(".education-start-date").value,
-        endDate: educationItem.querySelector(".education-end-date").value,
-        location: educationItem.querySelector(
-          '.third-title[placeholder="Location"]'
-        ).value,
-      })
-    ),
+    education: Array.from(
+      document.querySelectorAll(".category-container.education .grid-container")
+    ).map((educationItem) => ({
+      degree: educationItem.querySelector('.second-title[placeholder="Degree"]')
+        .value,
+      schoolName: educationItem.querySelector(
+        '.third-title[placeholder="School Name"]'
+      ).value,
+      startDate: educationItem.querySelector(".education-start-date").value,
+      endDate: educationItem.querySelector(".education-end-date").value,
+      location: educationItem.querySelector(
+        '.third-title[placeholder="Location"]'
+      ).value,
+    })),
 
     techSkills: [
       ...document.querySelectorAll('.second-title[placeholder="Skill"]'),
@@ -400,6 +403,7 @@ function saveToFile() {
   a.click();
 }
 
+// Load to file logic
 function loadFromFile(event) {
   let file = event.target.files[0];
   if (!file) return;
@@ -417,31 +421,42 @@ function loadFromFile(event) {
       jsonData.portfolio || "";
 
     if (jsonData.workExperience) {
-      let experienceBlocks = document.querySelectorAll(".work-experience");
-
-      while (experienceBlocks.length < jsonData.workExperience.length) {
-        document.querySelector(".professional-experience-add").click();
-        experienceBlocks = document.querySelectorAll(".work-experience");
-      }
+      const professionalExperienceSection = document.querySelector(
+        ".category-container.work-experience"
+      );
+      const experienceBlocks =
+        professionalExperienceSection.querySelectorAll(".grid-container");
 
       jsonData.workExperience.forEach((experience, index) => {
         let experienceBlock = experienceBlocks[index];
 
+        if (!experienceBlock) {
+          document.querySelector(".professional-experience-add").click();
+          experienceBlock =
+            professionalExperienceSection.querySelectorAll(".grid-container")[
+              index
+            ];
+        }
+
         experienceBlock.querySelector(
           '.second-title[placeholder="Job Title"]'
         ).value = experience.jobTitle || "";
+
         experienceBlock.querySelector(
           '.third-title[placeholder="Company Name"]'
         ).value = experience.companyName || "";
+
         experienceBlock.querySelector(".work-start-date").value =
           experience.startDate || "";
+
         experienceBlock.querySelector(".work-end-date").value =
           experience.endDate || "";
+
         experienceBlock.querySelector(
           '.third-title[placeholder="Location"]'
         ).value = experience.location || "";
 
-        let descriptionList = experienceBlock.querySelector("ul");
+        let descriptionList = experienceBlock.nextElementSibling;
         descriptionList.innerHTML = "";
 
         experience.description.forEach((desc) => {
@@ -454,30 +469,43 @@ function loadFromFile(event) {
           textarea.addEventListener("input", handleDescriptionInput);
           textarea.style.height = textarea.scrollHeight - 10 + "px";
         });
+
+        document.querySelectorAll("input").forEach((input) => {
+          adjustWidth(input);
+        });
       });
     }
 
     if (jsonData.education) {
-      let educationBlocks = document.querySelectorAll(".education");
-
-      while (educationBlocks.length < jsonData.education.length) {
-        document.querySelector(".education-add").click();
-        educationBlocks = document.querySelectorAll(".education");
-      }
+      const educationContainer = document.querySelector(
+        ".category-container.education"
+      );
+      const educationBlocks =
+        educationContainer.querySelectorAll(".grid-container");
 
       jsonData.education.forEach((edu, index) => {
         let educationBlock = educationBlocks[index];
 
+        if (!educationBlock) {
+          document.querySelector(".education-add").click();
+          educationBlock =
+            educationContainer.querySelectorAll(".grid-container")[index];
+        }
+
         educationBlock.querySelector(
           '.second-title[placeholder="Degree"]'
         ).value = edu.degree || "";
+
         educationBlock.querySelector(
           '.third-title[placeholder="School Name"]'
         ).value = edu.schoolName || "";
+
         educationBlock.querySelector(".education-start-date").value =
           edu.startDate || "";
+
         educationBlock.querySelector(".education-end-date").value =
           edu.endDate || "";
+
         educationBlock.querySelector(
           '.third-title[placeholder="Location"]'
         ).value = edu.location || "";
@@ -601,21 +629,16 @@ document.addEventListener("DOMContentLoaded", function () {
       input.addEventListener("input", handleCertificationInput);
     });
 
-  // Add new professional experience and education logic
+  // Add new professional experience logic
   const addProfessionalExperienceButton = document.querySelector(
     ".professional-experience-add"
   );
 
   addProfessionalExperienceButton.addEventListener("click", () => {
-    const categoryContainer = document.querySelector(".category-container");
-
-    const professionalExperienceSection = Array.from(
-      categoryContainer.parentElement.children
-    ).find(
-      (child) =>
-        child.querySelector("h1") &&
-        child.querySelector("h1").textContent === "Professional Experience"
+    const categoryContainer = document.querySelector(
+      ".category-container.work-experience"
     );
+    const professionalExperienceSection = categoryContainer;
 
     if (professionalExperienceSection) {
       let existingExperiences =
@@ -629,16 +652,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         newGridContainer = lastExperience.cloneNode(true);
         newDescriptionList = document.createElement("ul");
-        newDescriptionList.innerHTML = `
-          <li>
-            <textarea class="text" placeholder="Description"></textarea>
-          </li>
-        `;
+        newDescriptionList.innerHTML = `<li><textarea class="text" placeholder="Description"></textarea></li>`;
 
         let jobTitleContainer = newGridContainer.querySelector(
           ".job-title-container"
         );
-
         if (!jobTitleContainer) {
           jobTitleContainer = document.createElement("div");
           jobTitleContainer.classList.add("job-title-container");
@@ -660,27 +678,23 @@ document.addEventListener("DOMContentLoaded", function () {
         newGridContainer.classList.add("grid-container");
 
         newGridContainer.innerHTML = `
-          <div class="job-title-container">
-            <input type="text" class="second-title" placeholder="Job Title" />
-            <button class="remove">-</button>
-          </div>
-  
-          <div class="date-container">
-            <input type="text" class="work-start-date second-title" placeholder="Start Date" />
-            <p class="second-title">-</p>
-            <input type="text" class="work-end-date second-title" placeholder="End Date/Present" />
-          </div>
-  
-          <input type="text" class="third-title" placeholder="Company Name" />
-          <input type="text" class="third-title location" placeholder="Location" />
+            <div class="job-title-container">
+                <input type="text" class="second-title" placeholder="Job Title" />
+                <button class="remove">-</button>
+            </div>
+
+            <div class="date-container">
+                <input type="text" class="work-start-date second-title" placeholder="Start Date" />
+                <p class="second-title">-</p>
+                <input type="text" class="work-end-date second-title" placeholder="End Date/Present" />
+            </div>
+
+            <input type="text" class="third-title" placeholder="Company Name" />
+            <input type="text" class="third-title location" placeholder="Location" />
         `;
 
         newDescriptionList = document.createElement("ul");
-        newDescriptionList.innerHTML = `
-          <li>
-            <textarea class="text" placeholder="Description"></textarea>
-          </li>
-        `;
+        newDescriptionList.innerHTML = `<li><textarea class="text" placeholder="Description"></textarea></li>`;
 
         removeButton = newGridContainer.querySelector(".remove");
       }
@@ -710,18 +724,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Add new education logic
   const addEducationButton = document.querySelector(".education-add");
 
   addEducationButton.addEventListener("click", () => {
-    const categoryContainer = document.querySelector(".category-container");
-
-    const educationContainer = Array.from(
-      categoryContainer.parentElement.children
-    ).find(
-      (child) =>
-        child.querySelector("h1") &&
-        child.querySelector("h1").textContent === "Education"
+    const categoryContainer = document.querySelector(
+      ".category-container.education"
     );
+    const educationContainer = categoryContainer ? categoryContainer : null;
 
     if (educationContainer) {
       let existingEntries =
@@ -761,20 +771,20 @@ document.addEventListener("DOMContentLoaded", function () {
         newGridContainer.classList.add("grid-container");
 
         newGridContainer.innerHTML = `
-        <div class="degree-container">
-          <input type="text" class="second-title" placeholder="Degree" />
-          <button class="remove">-</button>
-        </div>
-        
-        <div class="date-container">
-          <input type="text" class="education-start-date second-title" placeholder="Start Date" />
-          <p class="second-title">-</p>
-          <input type="text" class="education-end-date second-title" placeholder="End Date" />
-        </div>
+            <div class="degree-container">
+                <input type="text" class="second-title" placeholder="Degree" />
+                <button class="remove">-</button>
+            </div>
 
-        <input type="text" class="third-title" placeholder="Institution Name" />
-        <input type="text" class="third-title location" placeholder="Location" />
-      `;
+            <div class="date-container">
+                <input type="text" class="education-start-date second-title" placeholder="Start Date" />
+                <p class="second-title">-</p>
+                <input type="text" class="education-end-date second-title" placeholder="End Date" />
+            </div>
+
+            <input type="text" class="third-title" placeholder="School Name" />
+            <input type="text" class="third-title location" placeholder="Location" />
+        `;
 
         removeButton = newGridContainer.querySelector(".remove");
       }

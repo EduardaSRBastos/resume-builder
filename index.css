@@ -23,11 +23,8 @@ header {
   margin-bottom: 50px;
   color: #216ce1;
   font-family: Tahoma;
-  text-shadow: 
-    -2px -2px 0px white,  
-    2px -2px 0px white,  
-    -2px 2px 0px white,  
-    2px 2px 0px white;  
+  text-shadow: -2px -2px 0px white, 2px -2px 0px white, -2px 2px 0px white,
+    2px 2px 0px white;
 }
 
 .main-container {
@@ -103,14 +100,15 @@ h1 {
 
 .add:hover {
   color: #1378d6;
-  border-color:#1378d6;
+  border-color: #1378d6;
   background: #1378d63b;
   width: 26px;
   height: 26px;
   margin-top: 19px;
 }
 
-.job-title-container, .degree-container {
+.job-title-container,
+.degree-container {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -132,8 +130,8 @@ h1 {
 
 .remove:hover {
   color: #db476c;
-  border-color:#db476c;
-  background:#db476c3b;
+  border-color: #db476c;
+  background: #db476c3b;
   width: 26px;
   height: 26px;
 }
@@ -188,7 +186,7 @@ li {
 li::before {
   content: "•";
   position: absolute;
-  left: -20px;
+  left: -25px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 16px;
@@ -197,12 +195,11 @@ li::before {
 .text {
   font-family: var(--font);
   font-size: 14px;
-  max-width: 97%;
   width: 100%;
   height: 16px;
   text-align: start;
   padding: 5px;
-  margin-left: -10px;
+  margin-left: -15px;
   overflow-wrap: break-word;
   word-wrap: break-word;
   white-space: pre-wrap;
@@ -214,25 +211,36 @@ li::before {
   outline: 2px solid #92baeb;
 }
 
+.grid-container.skills {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .grid-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 200%;
+  gap: 10px;
+  width: 100%;
   margin: 0;
-
 }
 
 .skill-list::before {
   content: "•";
   position: absolute;
-  left: -20px;
+  left: -25px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
 }
 
+.second-title[placeholder="Language"] {
+  margin-bottom: 5px;
+}
+
 #certification-input {
   display: grid;
+  margin-bottom: 5px;
 }
 
 /* Buttons */
@@ -277,7 +285,11 @@ footer {
 /* Print */
 @page {
   size: A4;
-  margin: 0 20mm;
+  margin: 15mm;
+}
+
+@page :first {
+  margin-top: 0;
 }
 
 @media print {
@@ -303,7 +315,8 @@ footer {
   }
 
   .name {
-    margin-top: -20px;
+    margin-top: -10mm;
+    font-size: 22px;
   }
 
   input.contact {
@@ -313,10 +326,71 @@ footer {
   .contact-print {
     display: block;
     pointer-events: auto;
+    font-size: 13px;
+    margin: -5px 0 20px 0;
   }
-  
+
+  h1 {
+    font-size: 17px;
+    margin-top: -5px;
+  }
+
+  hr {
+    margin: -10px auto 20px auto;
+  }
+
+  .grid-container {
+    width: 103%;
+    margin-left: -5px;
+    margin-top: -10px;
+  }
+
+  .second-title {
+    font-size: 15px;
+  }
+
+  .third-title {
+    font-size: 13px;
+    margin-top: -5px;
+  }
+
+  p {
+    margin: auto;
+    line-height: 1.8;
+  }
+
+  ul {
+    margin-top: 0;
+  }
+
+  li {
+    margin-bottom: -5px;
+  }
+
+  .text {
+    font-size: 12px;
+  }
+
+  .grid-list {
+    gap: 0;
+  }
+
+  .skill-list {
+    margin-bottom: 0;
+  }
+
+  .second-title[placeholder="Language"],
+  .third-title[placeholder="CEFR Level"],
+  #certification-input {
+    margin-top: -15px !important;
+  }
+
   #language-divider {
-    margin: auto -2px auto -8px !important;
+    margin: -15px -2px auto -18px !important;
+  }
+
+  .category-container {
+    page-break-inside: avoid;
   }
 
   .category-container {
