@@ -609,7 +609,7 @@ document.addEventListener("DOMContentLoaded", function () {
   addProfessionalExperienceButton.addEventListener("click", () => {
     const categoryContainer = document.querySelector(".category-container");
 
-    const professionalExperienceContainer = Array.from(
+    const professionalExperienceSection = Array.from(
       categoryContainer.parentElement.children
     ).find(
       (child) =>
@@ -617,46 +617,91 @@ document.addEventListener("DOMContentLoaded", function () {
         child.querySelector("h1").textContent === "Professional Experience"
     );
 
-    if (professionalExperienceContainer) {
-      const newCategoryContainer =
-        professionalExperienceContainer.cloneNode(true);
+    if (professionalExperienceSection) {
+      let existingExperiences =
+        professionalExperienceSection.querySelectorAll(".grid-container");
 
-      newCategoryContainer
-        .querySelectorAll("input, textarea")
-        .forEach((input) => {
-          input.value = "";
-        });
+      let newGridContainer, newDescriptionList, removeButton;
 
-      const newAddButton = newCategoryContainer.querySelector(".add");
-      if (newAddButton) {
-        newAddButton.remove();
+      if (existingExperiences.length > 0) {
+        const lastExperience =
+          existingExperiences[existingExperiences.length - 1];
+
+        newGridContainer = lastExperience.cloneNode(true);
+        newDescriptionList = document.createElement("ul");
+        newDescriptionList.innerHTML = `
+          <li>
+            <textarea class="text" placeholder="Description"></textarea>
+          </li>
+        `;
+
+        let jobTitleContainer = newGridContainer.querySelector(
+          ".job-title-container"
+        );
+
+        if (!jobTitleContainer) {
+          jobTitleContainer = document.createElement("div");
+          jobTitleContainer.classList.add("job-title-container");
+
+          const jobTitleInput = newGridContainer.querySelector(".second-title");
+          jobTitleContainer.appendChild(jobTitleInput);
+
+          removeButton = document.createElement("button");
+          removeButton.classList.add("remove");
+          removeButton.textContent = "-";
+          jobTitleContainer.appendChild(removeButton);
+
+          newGridContainer.prepend(jobTitleContainer);
+        } else {
+          removeButton = jobTitleContainer.querySelector(".remove");
+        }
+      } else {
+        newGridContainer = document.createElement("div");
+        newGridContainer.classList.add("grid-container");
+
+        newGridContainer.innerHTML = `
+          <div class="job-title-container">
+            <input type="text" class="second-title" placeholder="Job Title" />
+            <button class="remove">-</button>
+          </div>
+  
+          <div class="date-container">
+            <input type="text" class="work-start-date second-title" placeholder="Start Date" />
+            <p class="second-title">-</p>
+            <input type="text" class="work-end-date second-title" placeholder="End Date/Present" />
+          </div>
+  
+          <input type="text" class="third-title" placeholder="Company Name" />
+          <input type="text" class="third-title location" placeholder="Location" />
+        `;
+
+        newDescriptionList = document.createElement("ul");
+        newDescriptionList.innerHTML = `
+          <li>
+            <textarea class="text" placeholder="Description"></textarea>
+          </li>
+        `;
+
+        removeButton = newGridContainer.querySelector(".remove");
       }
 
-      const removeButton = document.createElement("button");
-      removeButton.textContent = "-";
-      removeButton.classList.add("remove");
-
-      newCategoryContainer
-        .querySelector(".flex-container")
-        .appendChild(removeButton);
-
       removeButton.addEventListener("click", () => {
-        newCategoryContainer.remove();
+        newGridContainer.remove();
+        newDescriptionList.remove();
       });
 
-      const parentContainer = professionalExperienceContainer.parentElement;
+      newGridContainer.querySelectorAll("input, textarea").forEach((input) => {
+        input.value = "";
+      });
 
-      parentContainer.insertBefore(
-        newCategoryContainer,
-        professionalExperienceContainer.nextElementSibling
-      );
+      professionalExperienceSection.appendChild(newGridContainer);
+      professionalExperienceSection.appendChild(newDescriptionList);
 
-      const newTextareas = newCategoryContainer.querySelectorAll(".text");
-      newTextareas.forEach((textarea) => {
+      newDescriptionList.querySelectorAll(".text").forEach((textarea) => {
         textarea.addEventListener("input", handleDescriptionInput);
       });
 
-      newCategoryContainer.querySelectorAll("input").forEach((input) => {
+      newGridContainer.querySelectorAll("input").forEach((input) => {
         adjustWidth(input);
         input.addEventListener("input", function () {
           adjustWidth(this);
@@ -679,42 +724,72 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     if (educationContainer) {
-      const newCategoryContainer = educationContainer.cloneNode(true);
+      let existingEntries =
+        educationContainer.querySelectorAll(".grid-container");
 
-      newCategoryContainer.querySelectorAll("input").forEach((input) => {
-        input.value = "";
-      });
+      let newGridContainer, removeButton;
 
-      const newAddButton = newCategoryContainer.querySelector(".add");
-      if (newAddButton) {
-        newAddButton.remove();
+      if (existingEntries.length > 0) {
+        const lastEntry = existingEntries[existingEntries.length - 1];
+        newGridContainer = lastEntry.cloneNode(true);
+
+        newGridContainer.querySelectorAll("input").forEach((input) => {
+          input.value = "";
+        });
+
+        let degreeContainer =
+          newGridContainer.querySelector(".degree-container");
+
+        if (!degreeContainer) {
+          degreeContainer = document.createElement("div");
+          degreeContainer.classList.add("degree-container");
+
+          const degreeInput = newGridContainer.querySelector(".second-title");
+          degreeContainer.appendChild(degreeInput);
+
+          removeButton = document.createElement("button");
+          removeButton.classList.add("remove");
+          removeButton.textContent = "-";
+          degreeContainer.appendChild(removeButton);
+
+          newGridContainer.prepend(degreeContainer);
+        } else {
+          removeButton = degreeContainer.querySelector(".remove");
+        }
+      } else {
+        newGridContainer = document.createElement("div");
+        newGridContainer.classList.add("grid-container");
+
+        newGridContainer.innerHTML = `
+        <div class="degree-container">
+          <input type="text" class="second-title" placeholder="Degree" />
+          <button class="remove">-</button>
+        </div>
+        
+        <div class="date-container">
+          <input type="text" class="education-start-date second-title" placeholder="Start Date" />
+          <p class="second-title">-</p>
+          <input type="text" class="education-end-date second-title" placeholder="End Date" />
+        </div>
+
+        <input type="text" class="third-title" placeholder="Institution Name" />
+        <input type="text" class="third-title location" placeholder="Location" />
+      `;
+
+        removeButton = newGridContainer.querySelector(".remove");
       }
 
-      const removeButton = document.createElement("button");
-      removeButton.textContent = "-";
-      removeButton.classList.add("remove");
-
-      newCategoryContainer
-        .querySelector(".flex-container")
-        .appendChild(removeButton);
-
       removeButton.addEventListener("click", () => {
-        newCategoryContainer.remove();
+        newGridContainer.remove();
       });
 
-      const parentContainer = educationContainer.parentElement;
-
-      parentContainer.insertBefore(
-        newCategoryContainer,
-        educationContainer.nextElementSibling
-      );
-
-      newCategoryContainer.querySelectorAll("input").forEach((input) => {
-        adjustWidth(input);
+      newGridContainer.querySelectorAll("input").forEach((input) => {
         input.addEventListener("input", function () {
           adjustWidth(this);
         });
       });
+
+      educationContainer.appendChild(newGridContainer);
     }
   });
 });

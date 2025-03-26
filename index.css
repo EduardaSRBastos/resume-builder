@@ -110,8 +110,14 @@ h1 {
   margin-top: 19px;
 }
 
+.job-title-container, .degree-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
 .remove {
-  margin: 20px 0 0 10px;
   font-size: 24px;
   background: none;
   border: 2px solid #ac2043;
@@ -130,7 +136,6 @@ h1 {
   background:#db476c3b;
   width: 26px;
   height: 26px;
-  margin-top: 19px;
 }
 
 hr {
