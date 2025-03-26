@@ -7,7 +7,7 @@
 
 <p><i>A customizable resume builder template built using HTML, CSS, and JavaScript.</i></p>
 
-<kbd> image </kbd>
+<kbd> ![image](https://github.com/user-attachments/assets/d3750aad-603c-49c4-807a-eca6f5afd0f9) </kbd>
 
  </div>
 
@@ -44,9 +44,9 @@
 ## PageSpeed Insights Performance Score
 <div align="center">
   
-| Desktop | Mobile |
+| [Desktop](https://pagespeed.web.dev/analysis/https-eduardasrbastos-github-io-resume-builder/zacmq8kevy?form_factor=desktop) | [Mobile](https://pagespeed.web.dev/analysis/https-eduardasrbastos-github-io-resume-builder/zacmq8kevy?form_factor=mobile) |
 |-------|-------|
-| <kbd> image </kbd> | <kbd> image </kbd> |
+| <kbd> ![image](https://github.com/user-attachments/assets/a1aa7264-4c63-4650-bf7a-e81fb64b0600) </kbd> | <kbd> ![image](https://github.com/user-attachments/assets/c47c210a-c459-4513-a340-a55209865461) </kbd> |
 
 </div>
 
