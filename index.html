@@ -8,7 +8,7 @@
       content="A customizable resume builder template."
     />
     <link rel="stylesheet" href="index.css" />
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
     <title>Resume Builder</title>
   </head>
   <body>
@@ -160,19 +160,13 @@
       </div>
 
       <div class="buttons-container">
-        <button onclick="window.print()">Print PDF</button>
-        <button onclick="saveToFile()">Save as File</button>
-        <button
-          class="load-file"
-          onclick="document.getElementById('load-file').click()"
-        >
-          Load CV File
-        </button>
+        <button id="printBtn">Print PDF</button>
+        <button id="saveFileBtn">Save as File</button>
+        <button id="loadFileBtn">Load CV File</button>
         <input
           type="file"
           id="load-file"
           accept=".json"
-          onchange="loadFromFile(event)"
           style="display: none"
         />
       </div>
