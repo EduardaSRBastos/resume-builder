@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // Print logic
   window.addEventListener("beforeprint", hideEmptyFields);
   window.addEventListener("beforeprint", prepareForPrint);
   window.addEventListener("afterprint", restoreHiddenFields);
@@ -96,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
       loadFromFile(event);
     });
 
+  // Add professional experience and education logic
   addProfessionalExperience();
   addEducation();
 });
