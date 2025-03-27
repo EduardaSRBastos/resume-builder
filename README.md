@@ -7,7 +7,7 @@
 
 <p><i>A customizable resume builder template built using HTML, CSS, and JavaScript.</i></p>
 
-<kbd> ![image](https://github.com/user-attachments/assets/d3750aad-603c-49c4-807a-eca6f5afd0f9) </kbd>
+<kbd> ![image](https://github.com/user-attachments/assets/a5b427bb-7b9e-41ee-8e31-de6f90c9b778) </kbd>
 
  </div>
 
