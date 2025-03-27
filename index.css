@@ -4,7 +4,7 @@
 
 html {
   font-family: var(--font);
-  background: #d9eaff;
+  background: linear-gradient(180deg, #d9eaff, #85b0e6);
   overflow-x: hidden;
 }
 
@@ -21,10 +21,12 @@ header {
   font-weight: bold;
   font-size: 44px;
   margin-bottom: 50px;
-  color: #216ce1;
+  background: linear-gradient(0, #85b0e6, #216ce1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: white;
   font-family: Tahoma;
-  text-shadow: -2px -2px 0px white, 2px -2px 0px white, -2px 2px 0px white,
-    2px 2px 0px white;
+  -webkit-text-stroke: 10px transparent;
 }
 
 .main-container {
@@ -87,13 +89,13 @@ h1 {
   margin: 19px 0 0 10px;
   font-size: 24px;
   background: none;
-  border: 2px solid #2a20ac;
+  border: 2px solid #216ce1;
   border-radius: 10px;
   width: 25px;
   height: 25px;
   font-weight: bold;
   cursor: pointer;
-  color: #2a20ac;
+  color: #216ce1;
   padding: 0;
   line-height: 0;
 }
