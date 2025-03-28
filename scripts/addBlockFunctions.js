@@ -89,8 +89,20 @@ export function addProfessionalExperience() {
         input.value = "";
       });
 
-      professionalExperienceSection.appendChild(newGridContainer);
-      professionalExperienceSection.appendChild(newDescriptionList);
+      const h1Element = professionalExperienceSection.querySelector("h1");
+      const gridContainer = professionalExperienceSection.querySelector(".grid-container");
+
+      if (h1Element && gridContainer) {
+        professionalExperienceSection.insertBefore(newGridContainer, gridContainer);
+        professionalExperienceSection.insertBefore(newDescriptionList, gridContainer);
+      }
+
+      document.querySelectorAll("input").forEach((input) => {
+        adjustWidth(input);
+        input.addEventListener("input", function () {
+          adjustWidth(this);
+        });
+      });
 
       document.querySelectorAll("input").forEach((input) => {
         adjustWidth(input);
@@ -171,8 +183,14 @@ export function addEducation() {
       removeButton.addEventListener("click", () => {
         newGridContainer.remove();
       });
-      educationContainer.appendChild(newGridContainer);
 
+      const h1Element = educationContainer.querySelector("h1");
+      const gridContainer = educationContainer.querySelector(".grid-container");
+
+      if (h1Element && gridContainer) {
+        educationContainer.insertBefore(newGridContainer, gridContainer);
+      }
+      
       document.querySelectorAll("input").forEach((input) => {
         adjustWidth(input);
         input.addEventListener("input", function () {

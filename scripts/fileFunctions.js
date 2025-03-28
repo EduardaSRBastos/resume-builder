@@ -8,7 +8,6 @@ import {
   handleCertificationInput,
 } from "./dynamicInputBlockFunctions.js";
 
-
 // Save to file logic
 export function saveToFile() {
   const certificationContainer = getCertificationContainer();
@@ -120,55 +119,58 @@ export function loadFromFile(event) {
       const professionalExperienceSection = document.querySelector(
         ".category-container.work-experience"
       );
-      const experienceBlocks =
-        professionalExperienceSection.querySelectorAll(".grid-container");
 
       jsonData.workExperience.forEach((experience, index) => {
-        let experienceBlock = experienceBlocks[index];
-
-        if (!experienceBlock) {
+        if (
+          index >=
+          professionalExperienceSection.querySelectorAll(".grid-container")
+            .length
+        ) {
           document.querySelector(".professional-experience-add").click();
-          experienceBlock =
+        }
+
+        setTimeout(() => {
+          const experienceBlock =
             professionalExperienceSection.querySelectorAll(".grid-container")[
               index
             ];
-        }
 
-        experienceBlock.querySelector(
-          '.second-title[placeholder="Job Title"]'
-        ).value = experience.jobTitle || "";
+          experienceBlock.querySelector(
+            '.second-title[placeholder="Job Title"]'
+          ).value = experience.jobTitle || "";
 
-        experienceBlock.querySelector(
-          '.third-title[placeholder="Company Name"]'
-        ).value = experience.companyName || "";
+          experienceBlock.querySelector(
+            '.third-title[placeholder="Company Name"]'
+          ).value = experience.companyName || "";
 
-        experienceBlock.querySelector(".work-start-date").value =
-          experience.startDate || "";
+          experienceBlock.querySelector(".work-start-date").value =
+            experience.startDate || "";
 
-        experienceBlock.querySelector(".work-end-date").value =
-          experience.endDate || "";
+          experienceBlock.querySelector(".work-end-date").value =
+            experience.endDate || "";
 
-        experienceBlock.querySelector(
-          '.third-title[placeholder="Location"]'
-        ).value = experience.location || "";
+          experienceBlock.querySelector(
+            '.third-title[placeholder="Location"]'
+          ).value = experience.location || "";
 
-        let descriptionList = experienceBlock.nextElementSibling;
-        descriptionList.innerHTML = "";
+          let descriptionList = experienceBlock.nextElementSibling;
+          descriptionList.innerHTML = "";
 
-        experience.description.forEach((desc) => {
-          let newLi = document.createElement("li");
-          newLi.innerHTML = `<textarea class="text" placeholder="Description">${desc}</textarea>`;
-          descriptionList.appendChild(newLi);
-        });
+          experience.description.forEach((desc) => {
+            let newLi = document.createElement("li");
+            newLi.innerHTML = `<textarea class="text" placeholder="Description">${desc}</textarea>`;
+            descriptionList.appendChild(newLi);
+          });
 
-        descriptionList.querySelectorAll(".text").forEach((textarea) => {
-          textarea.addEventListener("input", handleDescriptionInput);
-          textarea.style.height = textarea.scrollHeight - 10 + "px";
-        });
+          descriptionList.querySelectorAll(".text").forEach((textarea) => {
+            textarea.addEventListener("input", handleDescriptionInput);
+            textarea.style.height = textarea.scrollHeight - 10 + "px";
+          });
 
-        document.querySelectorAll("input").forEach((input) => {
-          adjustWidth(input);
-        });
+          document.querySelectorAll("input").forEach((input) => {
+            adjustWidth(input);
+          });
+        }, 100);
       });
     }
 
@@ -176,35 +178,40 @@ export function loadFromFile(event) {
       const educationContainer = document.querySelector(
         ".category-container.education"
       );
-      const educationBlocks =
-        educationContainer.querySelectorAll(".grid-container");
 
       jsonData.education.forEach((edu, index) => {
-        let educationBlock = educationBlocks[index];
-
-        if (!educationBlock) {
+        if (
+          index >= educationContainer.querySelectorAll(".grid-container").length
+        ) {
           document.querySelector(".education-add").click();
-          educationBlock =
-            educationContainer.querySelectorAll(".grid-container")[index];
         }
 
-        educationBlock.querySelector(
-          '.second-title[placeholder="Degree"]'
-        ).value = edu.degree || "";
+        setTimeout(() => {
+          const educationBlock =
+            educationContainer.querySelectorAll(".grid-container")[index];
 
-        educationBlock.querySelector(
-          '.third-title[placeholder="School Name"]'
-        ).value = edu.schoolName || "";
+          educationBlock.querySelector(
+            '.second-title[placeholder="Degree"]'
+          ).value = edu.degree || "";
 
-        educationBlock.querySelector(".education-start-date").value =
-          edu.startDate || "";
+          educationBlock.querySelector(
+            '.third-title[placeholder="School Name"]'
+          ).value = edu.schoolName || "";
 
-        educationBlock.querySelector(".education-end-date").value =
-          edu.endDate || "";
+          educationBlock.querySelector(".education-start-date").value =
+            edu.startDate || "";
 
-        educationBlock.querySelector(
-          '.third-title[placeholder="Location"]'
-        ).value = edu.location || "";
+          educationBlock.querySelector(".education-end-date").value =
+            edu.endDate || "";
+
+          educationBlock.querySelector(
+            '.third-title[placeholder="Location"]'
+          ).value = edu.location || "";
+
+          document.querySelectorAll("input").forEach((input) => {
+            adjustWidth(input);
+          });
+        }, 100);
       });
     }
 
