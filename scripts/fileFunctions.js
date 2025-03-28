@@ -1,4 +1,4 @@
-import { adjustWidth } from "../index.js";
+import { adjustWidth, clearAllFields } from "../index.js";
 import {
   addSkillBlock,
   addLanguageBlock,
@@ -8,70 +8,6 @@ import {
   handleCertificationInput,
 } from "./dynamicInputBlockFunctions.js";
 
-function clearAllFields() {
-  document.querySelectorAll("input[type='text']").forEach((input) => {
-    input.value = "";
-  });
-
-  document.querySelectorAll("textarea").forEach((textarea) => {
-    textarea.value = "";
-  });
-
-  const professionalExperienceSection = document.querySelector(
-    ".category-container.work-experience"
-  );
-
-  professionalExperienceSection
-    .querySelectorAll(".grid-container")
-    .forEach((container, index) => {
-      if (index > 0) {
-        container.remove();
-        professionalExperienceSection
-          .querySelectorAll("li")
-          .forEach((textarea) => {
-            textarea.remove();
-          });
-      }
-    });
-
-  const educationSection = document.querySelector(
-    ".category-container.education"
-  );
-
-  educationSection
-    .querySelectorAll(".grid-container")
-    .forEach((container, index) => {
-      if (index > 0) {
-        container.remove();
-      }
-    });
-
-  document.querySelectorAll(".skill-list").forEach((container, index) => {
-    if (index > 0) {
-      container.remove();
-    }
-  });
-
-  const languageContainer = getLanguageContainer();
-  if (languageContainer) {
-    languageContainer
-      .querySelectorAll('.second-title[placeholder="Language"]')
-      .forEach((el) => el.remove());
-    languageContainer
-      .querySelectorAll("#language-divider")
-      .forEach((el) => el.remove());
-    languageContainer
-      .querySelectorAll('.third-title[placeholder="CEFR Level"]')
-      .forEach((el) => el.remove());
-  }
-
-  const certificationContainer = getCertificationContainer();
-  if (certificationContainer) {
-    certificationContainer
-      .querySelectorAll("#certification-input")
-      .forEach((el) => el.remove());
-  }
-}
 
 // Save to file logic
 export function saveToFile() {

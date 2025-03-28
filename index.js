@@ -8,6 +8,7 @@ import {
   handleLanguageInput,
   getCertificationContainer,
   handleCertificationInput,
+  getLanguageContainer,
 } from "./scripts/dynamicInputBlockFunctions.js";
 import {
   prepareForPrint,
@@ -16,6 +17,76 @@ import {
   restoreHiddenFields,
 } from "./scripts/printFunctions.js";
 import { saveToFile, loadFromFile } from "./scripts/fileFunctions.js";
+
+// Clear page
+export function clearAllFields() {
+  document.querySelectorAll("input, textarea").forEach((element) => {
+    element.value = "";
+  });
+
+  const professionalExperienceSection = document.querySelector(
+    ".category-container.work-experience"
+  );
+
+  professionalExperienceSection
+    .querySelectorAll(".grid-container")
+    .forEach((container, index) => {
+      if (index > 0) {
+        container.remove();
+        professionalExperienceSection
+          .querySelectorAll("li")
+          .forEach((textarea) => {
+            textarea.remove();
+          });
+      }
+    });
+
+  const educationSection = document.querySelector(
+    ".category-container.education"
+  );
+
+  educationSection
+    .querySelectorAll(".grid-container")
+    .forEach((container, index) => {
+      if (index > 0) {
+        container.remove();
+      }
+    });
+
+  document.querySelectorAll(".skill-list").forEach((container, index) => {
+    if (index > 0) {
+      container.remove();
+    }
+  });
+
+  const languageContainer = getLanguageContainer();
+  if (languageContainer) {
+    languageContainer
+      .querySelectorAll('.second-title[placeholder="Language"]')
+      .forEach((el, index) => {
+        if (index > 0) el.remove();
+      });
+    languageContainer
+      .querySelectorAll("#language-divider")
+      .forEach((el, index) => {
+        if (index > 0) el.remove();
+      });
+    languageContainer
+      .querySelectorAll('.third-title[placeholder="CEFR Level"]')
+      .forEach((el, index) => {
+        if (index > 0) el.remove();
+      });
+  }
+
+  const certificationContainer = getCertificationContainer();
+  if (certificationContainer) {
+    certificationContainer
+      .querySelectorAll("#certification-input")
+      .forEach((el, index) => {
+        if (index > 0) el.remove();
+      });
+  }
+}
 
 // Dynamic input sizes
 export function adjustWidth(input) {
@@ -30,6 +101,9 @@ export function adjustWidth(input) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Reset input fields on page refresh
+  clearAllFields();
+
   // Dynamic size of inputs
   document.querySelectorAll("input").forEach((input) => {
     adjustWidth(input);
