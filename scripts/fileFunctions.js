@@ -8,6 +8,71 @@ import {
   handleCertificationInput,
 } from "./dynamicInputBlockFunctions.js";
 
+function clearAllFields() {
+  document.querySelectorAll("input[type='text']").forEach((input) => {
+    input.value = "";
+  });
+
+  document.querySelectorAll("textarea").forEach((textarea) => {
+    textarea.value = "";
+  });
+
+  const professionalExperienceSection = document.querySelector(
+    ".category-container.work-experience"
+  );
+
+  professionalExperienceSection
+    .querySelectorAll(".grid-container")
+    .forEach((container, index) => {
+      if (index > 0) {
+        container.remove();
+        professionalExperienceSection
+          .querySelectorAll("li")
+          .forEach((textarea) => {
+            textarea.remove();
+          });
+      }
+    });
+
+  const educationSection = document.querySelector(
+    ".category-container.education"
+  );
+
+  educationSection
+    .querySelectorAll(".grid-container")
+    .forEach((container, index) => {
+      if (index > 0) {
+        container.remove();
+      }
+    });
+
+  document.querySelectorAll(".skill-list").forEach((container, index) => {
+    if (index > 0) {
+      container.remove();
+    }
+  });
+
+  const languageContainer = getLanguageContainer();
+  if (languageContainer) {
+    languageContainer
+      .querySelectorAll('.second-title[placeholder="Language"]')
+      .forEach((el) => el.remove());
+    languageContainer
+      .querySelectorAll("#language-divider")
+      .forEach((el) => el.remove());
+    languageContainer
+      .querySelectorAll('.third-title[placeholder="CEFR Level"]')
+      .forEach((el) => el.remove());
+  }
+
+  const certificationContainer = getCertificationContainer();
+  if (certificationContainer) {
+    certificationContainer
+      .querySelectorAll("#certification-input")
+      .forEach((el) => el.remove());
+  }
+}
+
 // Save to file logic
 export function saveToFile() {
   const certificationContainer = getCertificationContainer();
@@ -103,6 +168,9 @@ export function loadFromFile(event) {
   let reader = new FileReader();
   reader.onload = function (event) {
     let jsonData = JSON.parse(event.target.result);
+
+    clearAllFields();
+
     const certificationContainer = getCertificationContainer();
     document.querySelector(".name").value = jsonData.name || "";
     document.querySelector('.contact[type="email"]').value =
@@ -244,28 +312,38 @@ export function loadFromFile(event) {
       });
     }
 
-    certificationContainer.innerHTML = `
-    <h1>Certifications, Licences & Publications</h1>
-    <hr>
-  `;
+    if (certificationContainer) {
+      let existingH1 = certificationContainer.querySelector("h1");
 
-    const certifications = jsonData.certifications || [];
+      if (!existingH1) {
+        existingH1 = document.createElement("h1");
+        existingH1.id = "certifications-title";
+        existingH1.textContent = "Certifications, Licences & Publications";
+        certificationContainer.prepend(existingH1);
+      }
 
-    certifications.forEach((certification) => {
-      const newInput = document.createElement("input");
-      newInput.type = "text";
-      newInput.id = "certification-input";
-      newInput.className = "second-title";
-      newInput.placeholder = "Title";
-      newInput.value = certification;
-      certificationContainer.appendChild(newInput);
-      newInput.addEventListener("input", handleCertificationInput);
-      adjustWidth(newInput);
-    });
+      certificationContainer
+        .querySelectorAll("#certification-input")
+        .forEach((el) => el.remove());
 
-    document.querySelectorAll("input").forEach((input) => {
-      adjustWidth(input);
-    });
+      const certifications = jsonData.certifications || [];
+
+      certifications.forEach((certification) => {
+        const newInput = document.createElement("input");
+        newInput.type = "text";
+        newInput.id = "certification-input";
+        newInput.className = "second-title";
+        newInput.placeholder = "Title";
+        newInput.value = certification;
+        certificationContainer.appendChild(newInput);
+        newInput.addEventListener("input", handleCertificationInput);
+        adjustWidth(newInput);
+      });
+
+      document.querySelectorAll("input").forEach((input) => {
+        adjustWidth(input);
+      });
+    }
   };
 
   reader.readAsText(file);

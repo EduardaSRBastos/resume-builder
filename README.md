@@ -38,6 +38,7 @@
 3. **Save your progress:** Export your data as a JSON file for future editing.  
 4. **Generate a PDF:** Print your CV directly as a PDF document.  
 5. **Reload saved data:** Easily load your saved JSON file to continue editing.  
+6. **Example:** [My Resume](./assets/Eduarda%20Bastos%20Resume.pdf).
 
 <br>
 

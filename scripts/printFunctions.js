@@ -1,28 +1,4 @@
 // Add links in print and hide empty fields
-export function prepareForPrint() {
-  document.querySelectorAll(".contact").forEach((input) => {
-    if (input.value) {
-      const link = document.createElement("a");
-      if (input.type === "email" && input.value) {
-        link.href = `mailto:${input.value}`;
-      } else {
-        link.href = input.value;
-      }
-      link.textContent = input.value;
-      link.classList.add("contact-print");
-      input.style.display = "none";
-      input.parentNode.insertBefore(link, input.nextSibling);
-    }
-  });
-}
-
-export function cleanupAfterPrint() {
-  document.querySelectorAll(".contact-print").forEach((link) => link.remove());
-  document
-    .querySelectorAll(".contact")
-    .forEach((input) => (input.style.display = "block"));
-}
-
 export function hideEmptyFields() {
   document.querySelectorAll("input, textarea").forEach((element) => {
     if (!element.value.trim()) {
@@ -81,6 +57,31 @@ export function hideEmptyFields() {
       separator.style.display = "block";
     }
   });
+
+  document
+    .querySelectorAll('.second-title[placeholder="Language"]')
+    .forEach((input) => {
+      if (input && input.value) {
+        input.value = `${input.value}:`;
+      }
+    });
+}
+
+export function prepareForPrint() {
+  document.querySelectorAll(".contact").forEach((input) => {
+    if (input.value) {
+      const link = document.createElement("a");
+      if (input.type === "email" && input.value) {
+        link.href = `mailto:${input.value}`;
+      } else {
+        link.href = input.value;
+      }
+      link.textContent = input.value;
+      link.classList.add("contact-print");
+      input.style.display = "none";
+      input.parentNode.insertBefore(link, input.nextSibling);
+    }
+  });
 }
 
 export function restoreHiddenFields() {
@@ -91,4 +92,19 @@ export function restoreHiddenFields() {
         element.style.display = "";
       }
     });
+
+  document
+    .querySelectorAll('.second-title[placeholder="Language"]')
+    .forEach((input) => {
+      if (input && input.value.endsWith(":")) {
+        input.value = input.value.slice(0, -1);
+      }
+    });
+}
+
+export function cleanupAfterPrint() {
+  document.querySelectorAll(".contact-print").forEach((link) => link.remove());
+  document
+    .querySelectorAll(".contact")
+    .forEach((input) => (input.style.display = "block"));
 }

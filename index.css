@@ -1,5 +1,5 @@
 :root {
-  --font: serif;
+  --font: "Times New Roman", serif;
 }
 
 html {
@@ -382,17 +382,21 @@ footer {
   }
 
   .second-title[placeholder="Language"],
-  .third-title[placeholder="CEFR Level"],
   #certification-input {
-    margin-top: -15px !important;
+    margin-top: -12px;
+  }
+
+  .third-title[placeholder="CEFR Level"] {
+    margin: -12px auto auto -10px !important;
   }
 
   #language-divider {
-    margin: -15px -2px auto -18px !important;
+    display: none;
   }
 
+  #languages-title,
   #certifications-title {
-    margin-top: 5px;
+    margin-top: 20px !important;
   }
 
   .category-container {
