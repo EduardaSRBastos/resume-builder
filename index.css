@@ -1,10 +1,23 @@
 :root {
   --font: "Times New Roman", serif;
+  --main-color: #216ce1;
+  --medium-color: #85b0e6;
+  --light-color: #d9eaff;
+  --outline-color: #92baeb;
+  --shadow-color: #08337933;
+  --border-color: #80808040;
+  --add-hover-color: #1378d6;
+  --add-hover-background-color: #1378d63b;
+  --remove-color: #ac2043;
+  --remove-hover-color: #db476c;
+  --remove-hover-background-color: #db476c3b;
+  --white: white;
+  --black: black;
 }
 
 html {
   font-family: var(--font);
-  background: linear-gradient(180deg, #d9eaff, #85b0e6);
+  background: linear-gradient(180deg, var(--light-color), var(--medium-color));
   overflow-x: hidden;
 }
 
@@ -21,12 +34,13 @@ header {
   font-weight: bold;
   font-size: 44px;
   margin-bottom: 50px;
-  background: linear-gradient(0, #85b0e6, #216ce1);
+  background: linear-gradient(0, var(--medium-color), var(--main-color));
   -webkit-background-clip: text;
   background-clip: text;
-  color: white;
+  color: var(--white);
   font-family: Tahoma;
   -webkit-text-stroke: 10px transparent;
+  text-shadow: 2px 2px var(--main-color);
 }
 
 .main-container {
@@ -42,9 +56,9 @@ header {
   width: 210mm;
   min-height: 297mm;
   height: fit-content;
-  background: white;
+  background: var(--white);
   padding: 20mm;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 15px var(--shadow-color);
   position: relative;
 }
 
@@ -54,11 +68,11 @@ input {
   height: 24px;
   padding: 3px 5px;
   border-radius: 5px;
-  border: 1px solid #80808040;
+  border: 1px solid var(--border-color);
 }
 
 input:focus {
-  outline: 2px solid #92baeb;
+  outline: 2px solid var(--outline-color);
 }
 
 .name {
@@ -89,21 +103,21 @@ h1 {
   margin: 19px 0 0 10px;
   font-size: 24px;
   background: none;
-  border: 2px solid #216ce1;
+  border: 2px solid var(--main-color);
   border-radius: 10px;
   width: 25px;
   height: 25px;
   font-weight: bold;
   cursor: pointer;
-  color: #216ce1;
+  color: var(--main-color);
   padding: 0;
   line-height: 0;
 }
 
 .add:hover {
-  color: #1378d6;
-  border-color: #1378d6;
-  background: #1378d63b;
+  color: var(--add-hover-color);
+  border-color: var(--add-hover-color);
+  background: var(--add-hover-background-color);
   width: 26px;
   height: 26px;
   margin-top: 19px;
@@ -120,29 +134,29 @@ h1 {
 .remove {
   font-size: 24px;
   background: none;
-  border: 2px solid #ac2043;
+  border: 2px solid var(--remove-color);
   border-radius: 10px;
   width: 25px;
   height: 25px;
   font-weight: bold;
   cursor: pointer;
-  color: #ac2043;
+  color: var(--remove-color);
   line-height: 0;
 }
 
 .remove:hover {
-  color: #db476c;
-  border-color: #db476c;
-  background: #db476c3b;
+  color: var(--remove-hover-color);
+  border-color: var(--remove-hover-color);
+  background: var(--remove-hover-background-color);
   width: 26px;
   height: 26px;
 }
 
 hr {
   margin: -10px auto 15px auto;
-  color: black;
+  color: var(--black);
   border: none;
-  border-top: 2px solid black;
+  border-top: 2px solid var(--black);
 }
 
 .grid-container {
@@ -206,11 +220,11 @@ li::before {
   word-wrap: break-word;
   white-space: pre-wrap;
   border-radius: 5px;
-  border: 1px solid #80808040;
+  border: 1px solid var(--border-color);
 }
 
 .text:focus {
-  outline: 2px solid #92baeb;
+  outline: 2px solid var(--outline-color);
 }
 
 .grid-container.skills {
@@ -262,20 +276,21 @@ li::before {
   height: fit-content;
   width: fit-content;
   position: relative;
-  background: linear-gradient(180deg, #d9eaff, #85b0e6);
-  color: #216ce1;
+  background: linear-gradient(180deg, var(--light-color), var(--medium-color));
+  color: var(--main-color);
   font-size: 16px;
   font-weight: bold;
   border: none;
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(33, 108, 225, 0.2);
+  box-shadow: 0 0 10px var(--shadow-color);
+  text-shadow: 1px 1px var(--light-color);
 }
 
 .buttons-container button:hover {
   zoom: 1.05;
-  background: linear-gradient(0deg, #d9eaff, #85b0e6);
+  background: linear-gradient(0deg, var(--light-color), var(--medium-color));
 }
 
 footer {
