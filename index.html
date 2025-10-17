@@ -1,183 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="A customizable resume builder template."
-    />
-    <link rel="stylesheet" href="index.css" />
-    <script type="module" src="index.js"></script>
-    <title>Resume Builder</title>
-  </head>
-  <body>
-    <header>Resume Builder</header>
 
-    <div class="main-container">
-      <div class="page">
-        <div class="category-container">
-          <input type="text" class="name" placeholder="Name" />
-          <div class="contacts-section">
-            <input type="email" class="contact" placeholder="Email" />
-            <input type="url" class="contact" placeholder="Linkedin" />
-            <input type="url" class="contact" placeholder="Portfolio" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A customizable resume builder template." />
+  <link rel="stylesheet" href="index.css" />
+  <script type="module" src="index.js"></script>
+  <title>Resume Builder</title>
+</head>
+
+<body>
+  <header>Resume Builder</header>
+
+  <div class="main-container">
+    <div class="page">
+      <div class="category-container">
+        <input type="text" class="name" placeholder="Name" />
+        <div class="contacts-section">
+          <input type="email" class="contact" placeholder="Email" />
+          <input type="url" class="contact" placeholder="Linkedin" />
+          <input type="url" class="contact" placeholder="Portfolio" />
+        </div>
+      </div>
+
+      <div class="category-container work-experience">
+        <div class="flex-container">
+          <h1>Professional Experience</h1>
+          <button class="add professional-experience-add">+</button>
+        </div>
+        <hr />
+
+        <div class="grid-container">
+          <input type="text" class="second-title" placeholder="Job Title" />
+
+          <div class="date-container">
+            <input type="text" class="work-start-date second-title" placeholder="Start Date" />
+            <p class="second-title">-</p>
+            <input type="text" class="work-end-date second-title" placeholder="End Date/Present" />
           </div>
+
+          <input type="text" class="third-title" placeholder="Company Name" />
+          <input type="text" class="third-title location" placeholder="Location" />
         </div>
 
-        <div class="category-container work-experience">
-          <div class="flex-container">
-            <h1>Professional Experience</h1>
-            <button class="add professional-experience-add">+</button>
-          </div>
-          <hr />
+        <ul>
+          <li>
+            <textarea class="text" placeholder="Description"></textarea>
+          </li>
+        </ul>
+      </div>
 
-          <div class="grid-container">
-            <input type="text" class="second-title" placeholder="Job Title" />
+      <div class="category-container education">
+        <div class="flex-container">
+          <h1>Education</h1>
+          <button class="add education-add">+</button>
+        </div>
+        <hr />
 
-            <div class="date-container">
-              <input
-                type="text"
-                class="work-start-date second-title"
-                placeholder="Start Date"
-              />
-              <p class="second-title">-</p>
-              <input
-                type="text"
-                class="work-end-date second-title"
-                placeholder="End Date/Present"
-              />
-            </div>
+        <div class="grid-container">
+          <input type="text" class="second-title" placeholder="Degree" />
 
-            <input type="text" class="third-title" placeholder="Company Name" />
-            <input
-              type="text"
-              class="third-title location"
-              placeholder="Location"
-            />
+          <div class="date-container">
+            <input type="text" class="education-start-date second-title" placeholder="Start Date" />
+            <p class="second-title">-</p>
+            <input type="text" class="education-end-date second-title" placeholder="End Date/Present" />
           </div>
 
-          <ul>
-            <li>
-              <textarea class="text" placeholder="Description"></textarea>
+          <input type="text" class="third-title" placeholder="School Name" style="margin-bottom: 20px" />
+          <input type="text" class="third-title location" placeholder="Location" />
+        </div>
+      </div>
+
+      <div class="category-container">
+        <div class="flex-container">
+          <h1>Technical Skills</h1>
+        </div>
+        <hr />
+
+        <div class="grid-container skills">
+          <ul class="grid-list">
+            <li class="skill-list">
+              <input type="text" class="second-title" placeholder="Skill" style="margin-left: -15px" />
             </li>
           </ul>
         </div>
+      </div>
 
-        <div class="category-container education">
-          <div class="flex-container">
-            <h1>Education</h1>
-            <button class="add education-add">+</button>
-          </div>
-          <hr />
-
-          <div class="grid-container">
-            <input type="text" class="second-title" placeholder="Degree" />
-
-            <div class="date-container">
-              <input
-                type="text"
-                class="education-start-date second-title"
-                placeholder="Start Date"
-              />
-              <p class="second-title">-</p>
-              <input
-                type="text"
-                class="education-end-date second-title"
-                placeholder="End Date/Present"
-              />
-            </div>
-
-            <input
-              type="text"
-              class="third-title"
-              placeholder="School Name"
-              style="margin-bottom: 20px"
-            />
-            <input
-              type="text"
-              class="third-title location"
-              placeholder="Location"
-            />
-          </div>
+      <div class="category-container">
+        <div class="flex-container">
+          <h1 id="languages-title">Languages</h1>
         </div>
+        <hr />
 
-        <div class="category-container">
-          <div class="flex-container">
-            <h1>Technical Skills</h1>
-          </div>
-          <hr />
-
-          <div class="grid-container skills">
-            <ul class="grid-list">
-              <li class="skill-list">
-                <input
-                  type="text"
-                  class="second-title"
-                  placeholder="Skill"
-                  style="margin-left: -15px"
-                />
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="category-container">
-          <div class="flex-container">
-            <h1 id="languages-title">Languages</h1>
-          </div>
-          <hr />
-
-          <div class="flex-container">
-            <input type="text" class="second-title" placeholder="Language" />
-            <p
-              class="second-title"
-              id="language-divider"
-              style="margin: auto 5px auto 3px"
-            >
-              :
-            </p>
-            <input
-              type="text"
-              class="third-title"
-              placeholder="CEFR Level"
-              style="margin: 0"
-            />
-          </div>
-        </div>
-
-        <div class="category-container">
-          <h1 id="certifications-title">Certifications, Licences & Publications</h1>
-          <hr />
-
-          <input
-            type="text"
-            id="certification-input"
-            class="second-title"
-            placeholder="Title"
-          />
+        <div class="flex-container">
+          <input type="text" class="second-title" placeholder="Language" />
+          <p class="second-title" id="language-divider" style="margin: auto 5px auto 3px">
+            :
+          </p>
+          <input type="text" class="third-title" placeholder="CEFR Level" style="margin: 0" />
         </div>
       </div>
 
-      <div class="buttons-container">
-        <button id="printBtn">Print PDF</button>
-        <button id="saveFileBtn">Save as File</button>
-        <button id="loadFileBtn">Load CV File</button>
-        <input
-          type="file"
-          id="load-file"
-          accept=".json"
-          style="display: none"
-        />
+      <div class="category-container">
+        <h1 id="certifications-title">Certifications, Licences & Publications</h1>
+        <hr />
+
+        <input type="text" id="certification-input" class="second-title" placeholder="Title" />
       </div>
     </div>
 
-    <footer>
-      © <span id="year"></span> Eduarda Bastos. Licensed under the MIT License.
-    </footer>
+    <div class="buttons-container">
+      <button id="printBtn">Print PDF</button>
+      <button id="saveFileBtn">Save as File</button>
+      <button id="loadFileBtn">Load CV File</button>
+      <input type="file" id="load-file" accept=".json" style="display: none" />
+    </div>
+  </div>
 
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-  </body>
+  <footer>
+    © <span id="year"></span>
+    <a href="https://github.com/EduardaSRBastos" target="_blank" rel="noopener noreferrer">Eduarda Bastos</a>. Licensed
+    under the MIT License.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+
 </html>
