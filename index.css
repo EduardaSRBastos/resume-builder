@@ -257,6 +257,7 @@ li::before {
 #certification-input {
   display: grid;
   margin-bottom: 5px;
+  font-weight: normal !important;
 }
 
 /* Buttons */
@@ -302,7 +303,7 @@ footer {
 /* Print */
 @page {
   size: A4;
-  margin: 10mm;
+  margin: 15mm;
 }
 
 @page :first {
@@ -329,7 +330,6 @@ footer {
     height: auto;
     position: absolute;
     top: 0;
-    zoom: 1.3;
   }
 
   .name {
